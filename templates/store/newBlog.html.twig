@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block article %}
+
+<section class="section offer" id="contact" aria-label="offer" data-section>
+        <div class="container">
+
+          <figure class="offer-banner">
+            <img src="../images/b1.jpg" width="305" height="408" loading="lazy" alt="offer products"
+              class="w-100">
+
+            <img src="../images/b2.jpg" width="450" height="625" loading="lazy" alt="offer products"
+              class="w-100">
+          </figure>
+          <div class="offer-content">
+<h1 class="h2-large section-title">Ajouter un blog</h1>
+
+  {{ form_start(form , {'attr': {'class':'fcf-form-class'}}) }}
+<div class="fcf-form-group">
+                
+                  <div class="fcf-input-group">
+                    {{ form_row(form.title, {'attr': {'class': 'fcf-form-control'}}) }}
+                  </div>
+              </div>
+
+<div class="fcf-form-group">
+                 
+                  <div class="fcf-input-group">
+                   {{ form_row(form.image, {'attr': {'class': 'fcf-form-control'}}) }}
+                  </div>
+              </div>
+<div class="fcf-form-group">
+                  
+                  <div class="fcf-input-group">
+                   {{ form_row(form.detail, {'attr': {'class': 'fcf-form-control'}}) }}
+                  </div>
+              </div>
+
+
+<br>
+<button type="submit" class="fcf-btn fcf-btn-primary fcf-btn-lg fcf-btn-block">Enregistrer</button>
+{{ form_end(form) }}
+</div>
+</div>
+</section>
+{% block contact %}
+{% endblock %}
+{% endblock %} 

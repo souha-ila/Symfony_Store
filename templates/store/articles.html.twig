@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block article %}
+
+   <link rel="stylesheet" href="../css/main.css">
+   
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+<div class="small-container">
+<h2 class="title">Latest Products</h2>
+
+<div class="categories">
+  <a href="/store/article">All</a>
+  <a href="/article/category1">Tote Bags</a>
+  <a href="/article/category2">Backpacks</a>
+  <a href="/article/category3">Crossbody Bags</a>
+</div>
+
+ <div class="row">
+    {% for article in articles %}
+    <div class="col-4">
+      <div class="product-item">
+       <a href="{{ path('single', {'id': article.id}) }}">
+
+          <img class="product-image" src="../images/{{ article.image }}" width="100px" height="100px">
+        </a>
+        <h4 class="product-name">{{ article.title }}</h4>
+        <div class="rating">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star-half"></i>
+        </div>
+        <p class="product-price">{{ article.price }}</p>
+        <a  href="{{path('AddToCart',{'id': article.id})}} "class="btn btn-primary add-to-cart-btn">
+          Add to Cart <span class="fas fa-cart-plus"></span>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+/* Add some padding to the container */
+
+.success-message {
+    background-color: #66cc66;
+    color: #ffffff;
+}
+.alert {
+    animation: hide-message 20s forwards;
+}
+
+@keyframes hide-message {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+</style>
+{% endblock %}

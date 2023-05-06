@@ -1,0 +1,97 @@
+
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <h1>Reset your password</h1>
+
+    {{ form_start(requestForm) }}
+        {{ form_row(requestForm.email) }}
+        <div>
+            <small>
+                Enter your email address and we will send you a
+                link to reset your password.
+            </small>
+        </div>
+
+        <button class="btn btn-primary">Send password reset email</button>
+    {{ form_end(requestForm) }}
+{% endblock %}
+
+<style>
+    /* Couleur de fond */
+    body {
+        background-color: white;
+    }
+
+    /* Style pour les champs de formulaire */
+    input, select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 50px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style pour le label */
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Style de bouton */
+    .btn {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 20px;
+    }
+     .btn1 {
+        background-color: #bd0d0d;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 20px;
+    }
+
+    /* Style pour le titre */
+    h1 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    /* Style pour les messages d'erreur */
+    .alert {
+        background-color: #f2dede;
+        color: #a94442;
+        border: 1px solid #ebccd1;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Style pour l'image */
+    .img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Style pour le formulaire */
+    .col-md-6 {
+      width: 20%;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+     .col-md-7 {
+      width: 50%;
+      padding: 50px;
+      background-color: white;
+       margin-bottom: 30px;
+       margin-left: 200px;
+    }
+  </style>

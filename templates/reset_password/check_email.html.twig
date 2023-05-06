@@ -1,0 +1,89 @@
+
+
+{% block title %}Password Reset Email Sent{% endblock %}
+
+{% block body %}
+    <p>
+        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
+        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+    </p>
+    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+{% endblock %}
+
+<style>
+    /* Couleur de fond */
+    body {
+        background-color: white;
+    }
+
+    /* Style pour les champs de formulaire */
+    input, select {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 50px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style pour le label */
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+
+    /* Style de bouton */
+    .btn {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 20px;
+    }
+     .btn1 {
+        background-color: #bd0d0d;
+        color: white;
+        border: none;
+        padding: 20px 40px;
+        font-size: 20px;
+    }
+
+    /* Style pour le titre */
+    h1 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    /* Style pour les messages d'erreur */
+    .alert {
+        background-color: #f2dede;
+        color: #a94442;
+        border: 1px solid #ebccd1;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Style pour l'image */
+    .img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Style pour le formulaire */
+    .col-md-6 {
+      width: 20%;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+     .col-md-7 {
+      width: 50%;
+      padding: 50px;
+      background-color: white;
+       margin-bottom: 30px;
+       margin-left: 200px;
+    }
+  </style>

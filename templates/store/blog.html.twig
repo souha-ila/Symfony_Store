@@ -1,0 +1,34 @@
+
+  <div class="blog-post">
+  
+    <h2>{{ blog.title }}</h2>
+    <p>{{ blog.detail }}</p>
+    <img src="../images/{{ blog.image }}" alt="img" />
+    
+  </div>
+
+<style>
+.blog-post {
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.blog-post h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.blog-post p {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.blog-post img {
+  max-width: 100%;
+  height: auto;
+}
+
+</style>

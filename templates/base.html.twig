@@ -2,18 +2,849 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+        <title>{% block title %} Yarn Vibes {% endblock %}</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="../images/logo1.png">
+  <link rel="preload" as="image" href="../images/hero-banner-1.jpg">
+  <link rel="preload" as="image" href="../images/hero-banner-2.jpg">
+  <link rel="preload" as="image" href="../images/hero-banner-3.jpg">
+
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+{% block header %}
+  <header class="header">
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+        <div class="input-wrapper">
+          <input type="search" name="search" placeholder="Search product" class="search-field">
+          <button class="search-submit" aria-label="search">
+            <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+          </button>
+        </div>
+
+        <a href="/store" class="logo">
+          <img src="../images/logo1.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <div class="header-actions">
+
+         <div class="popup-container" id="popup-container">
+  <div class="popup">
+ <div>
+ <p> Welcome 
+      {% if app.user %}
+  {% set email = app.user.email %}
+  {{ email|split('@')[0] }} 
+{% endif %}
+to Yarn Store!
+</p>
+    </div>
+    <button id="loginBtn" class="popup-btn">Login</button>
+    <button id="logoutBtn" class="popup-btn1">Logout</button>
+    <button id="close-btn" class="popup-close-btn">X</button>
+  </div>
+</div>
+
+<button class="header-action-btn" aria-label="user" onclick="togglePopup()">
+  <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+</button>
+
+<script>
+
+var popup = document.getElementById("popup-container");
+
+loginBtn.addEventListener('click', function() {
+  window.location.href = "{{ path('app_login') }}";
+});
+logoutBtn.addEventListener('click', function() {
+  window.location.href = "{{ path('app_logout') }}";
+});
+
+document.getElementById("close-btn").addEventListener("click", function() {
+  togglePopup();
+});
+
+function togglePopup() {
+  popup.classList.toggle("show");
+}
+
+
+</script>
+
+<style>
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  z-index: 999;
+}
+
+
+
+.popup {
+  position: absolute;
+  top: 40%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.popup h2 {
+  margin-top: 0;
+}
+
+.popup p {
+  margin-bottom: 20px;
+}
+
+.popup-btn {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: #900C3F;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.popup-btn1 {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  background-color: lightgrey;
+  color: #900C3F;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: gray;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.show {
+  display: block;
+}
+</style>
+
+          <a  href="{{ path('cart')}}"class="header-action-btn" aria-label="cart item">
+          
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true">
+            </ion-icon>  
+          </button>
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+
+            <li>
+              <a href="/" class="navbar-link has-after">Home</a>
+            </li>
+
+            <li>
+              <a href="#collection" class="navbar-link has-after">Collection</a>
+            </li>
+
+            <li>
+              <a href="/private/article" class="navbar-link has-after">Shop</a>
+            </li>
+
+            <li>
+              <a href="#contact" class="navbar-link has-after">contact</a>
+            </li>
+
+            <li>
+              <a href="#blog" class="navbar-link has-after">Blog</a>
+            </li>
+
+          </ul>
+        </nav>
+
+      </div>
+    </div>
+
+  </header>
+{% endblock %}
+
+
+
+
+  <!-- 
+    - #MOBILE NAVBAR
+  -->
+{% block nav %}
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+
+      <div class="wrapper">
+        <a href="/" class="logo">
+          <img src="../images/logo.png" width="179" height="26" alt="Glowing">
+        </a>
+
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="/" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li>
+          <a href="#collection" class="navbar-link" data-nav-link>Collection</a>
+        </li>
+
+        <li>
+          <a href="/private/article" class="navbar-link" data-nav-link>Shop</a>
+        </li>
+
+        <li>
+          <a href="#contact" class="navbar-link" data-nav-link>contact</a>
+        </li>
+
+        <li>
+          <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+{% endblock %}
+
+
+{% block main %}
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+
+      <section class="section hero" id="home" aria-label="hero" data-section>
+        <div class="container">
+
+          <ul class="has-scrollbar">
+
+            <li class="scrollbar-item">
+              <div class="hero-card has-bg-image" style="background-image: url('../images/hero-banner-1.jpg')">
+
+                <div class="card-content">
+
+                  <h1 class="h1 hero-title">
+                    Yarn<br>
+                    Vibes
+                  </h1>
+
+                  <p class="hero-text">
+                     is your ultimate destination for handmade crochet pieces that are created with care and designed for everyone.
+                  </p>
+
+                  <a href="/private/article" class="btn btn-primary">Shop Now</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="hero-card has-bg-image" style="background-image: url('../images/hero-banner-2.jpg')">
+
+                <div class="card-content">
+
+                  <h1 class="h1 hero-title">
+                    Yarn<br>
+                    Vibes
+                  </h1>
+
+                  <p class="hero-text">
+                     is your ultimate destination for handmade crochet pieces that are created with care and designed for everyone.
+                  </p>
+
+                  <a href="/private/article" class="btn btn-primary">Shop Now</a>
+
+                </div>
+
+              </div>
+            </li>
+
+            <li class="scrollbar-item">
+              <div class="hero-card has-bg-image" style="background-image: url('../images/hero-banner-3.jpg')">
+
+                <div class="card-content">
+
+                  <h1 class="h1 hero-title">
+                    Yarn<br>
+                    Vibes
+                  </h1>
+
+                  <p class="hero-text">
+                     is your ultimate destination for handmade crochet pieces that are created with care and designed for everyone.
+                  </p>
+
+                  <a href="/private/article" class="btn btn-primary">Shop Now</a>
+
+                </div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+{% endblock %}
+
+
+
+      <!-- 
+        - #COLLECTION
+      -->
+{% block article %}
+      <section class="section collection" id="collection" aria-label="collection" data-section>
+        <div class="container">
+
+          <ul class="collection-list">
+
+            <li>
+              <div class="collection-card has-before hover:shine">
+
+                <h2 class="h2 card-title">Tote Bags</h2>
+
+                <p class="card-text">Starting at $18</p>
+
+                <a href="/private/article" class="btn-link">
+                  <span class="span">Shop Now</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+                <div class="has-bg-image" style="background-image: url('../images/collection-1.jpg')"></div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="collection-card has-before hover:shine">
+
+                <h2 class="h2 card-title ">Backpacks</h2>
+
+                <p class="card-text">Starting at $50</p>
+
+                <a href="/private/article" class="btn-link">
+                  <span class="span">Discover Now</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+                <div class="has-bg-image" style="background-image: url('../images/collection-2.jpg')"></div>
+
+              </div>
+            </li>
+
+            <li>
+              <div class="collection-card has-before hover:shine">
+
+                <h2 class="h2 card-title">Crossbody Bags</h2>
+
+                <p class="card-text">Starting at $9</p>
+
+                <a href="/private/article" class="btn-link">
+                  <span class="span">Discover Now</span>
+
+                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+                </a>
+
+                <div class="has-bg-image" style="background-image: url('../images/collection-3.jpg')"></div>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+     <!-- 
+        - #SHOP
+      -->
+
+     
+      <section class="section shop" id="shop" aria-label="shop" data-section>
+        <div class="container">
+
+          <div class="title-wrapper">
+            <h2 class="h2 section-title">Our Bestsellers</h2>
+
+            <a href="/private/article" class="btn-link">
+              <span class="span">Shop All Products</span>
+
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </a>
+          </div>
+
+          <ul class="has-scrollbar">
+  {% for article in articles %}
+            <li class="scrollbar-item">
+              <div class="shop-card">
+
+                <div class="card-banner img-holder" style="--width: 540; --height: 720;">
+                  <img src="../images/{{ article.image }}" width="540" height="720" loading="lazy"
+                    alt="Facial cleanser" class="img-cover">
+
+                  <div class="card-actions">
+
+                    <a href="/private/article" class="action-btn" aria-label="add to cart">
+                      <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+                    </a>
+
+                  </div>
+                </div>
+
+                <div class="card-content">
+
+                  <div class="price">
+                  <span class="span">{{ article.price }}$</span>
+               
+
+                  </div>
+
+                  <h3>
+                    <a href="#" class="card-title">{{ article.title }}</a>
+                  </h3>
+
+                  <div class="card-rating">
+
+                    <div class="rating-wrapper" aria-label="5 start rating">
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                      <ion-icon name="star" aria-hidden="true"></ion-icon>
+                    </div>
+
+
+                  </div>
+
+                </div>
+
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+  
+        </div>
+      </section>
+{% endblock %}
+
+  <!-- 
+        - #FEATURE
+      -->
+
+      <section class="section feature" aria-label="feature" data-section>
+        <div class="container">
+
+          <h2 class="h2-large section-title">Why Shop with Yarn Vibes?</h2>
+
+          <ul class="flex-list">
+
+            <li class="flex-item">
+              <div class="feature-card">
+
+                <img src="../images/feature-1.jpg" width="204" height="236" loading="lazy" alt="Guaranteed PURE"
+                  class="card-icon">
+
+                <h3 class="h3 card-title">Guaranteed Quality</h3>
+
+                <p class="card-text">
+                  At Yarn Vibes, we're committed to providing you with the highest quality yarns. We carefully source all of our materials to ensure that they meet our strict standards, so you can be confident that you're getting the best products possible.
+                </p>
+
+              </div>
+            </li>
+
+            <li class="flex-item">
+              <div class="feature-card">
+
+                <img src="../images/feature-2.jpg" width="204" height="236" loading="lazy"
+                  alt="Completely Cruelty-Free" class="card-icon">
+
+                <h3 class="h3 card-title">Completely Ethical</h3>
+
+                <p class="card-text">
+                  We believe in treating all creatures with kindness, so all of our yarns are completely cruelty-free. You can feel good knowing that no animals were harmed in the making of your yarn.
+                </p>
+
+              </div>
+            </li>
+
+            <li class="flex-item">
+              <div class="feature-card">
+
+                <img src="../images/feature-3.jpg" width="254" height="236" loading="lazy"
+                  alt="Ingredient Sourcing" class="card-icon">
+
+                <h3 class="h3 card-title">Sustainable Sourcing</h3>
+
+                <p class="card-text">
+                  We care about the environment and the impact our business has on the planet. That's why we make a conscious effort to source our materials sustainably, so you can enjoy your yarn knowing that it was made with care for the earth.
+                </p>
+
+              </div>
+            </li>
+
+          </ul>
+
+        </div>
+      </section>
+
+
+ 
+      <!-- 
+        - #BANNER
+      -->
+      <!-- 
+        - #contact
+      -->
+{% block contact %}
+        <section class="section offer" id="contact" aria-label="offer" data-section>
+        <div class="container">
+
+          <figure class="offer-banner">
+            <img src="../images/offer-banner-1.jpg" width="305" height="408" loading="lazy" alt="offer products"
+              class="w-100">
+
+            <img src="../images/offer-banner-2.jpg" width="450" height="625" loading="lazy" alt="offer products"
+              class="w-100">
+          </figure>
+
+          <div class="offer-content">
+
+           
+            <h2 class="h2-large section-title">Contact us</h2>
+
+            <form id="fcf-form-id" class="fcf-form-class" method="post" action="contact-form-process.php">
+        
+              <div class="fcf-form-group">
+                  <label for="Name" class="fcf-label">Your name</label>
+                  <div class="fcf-input-group">
+                      <input type="text" id="Name" name="Name" class="fcf-form-control" required>
+                  </div>
+              </div>
+      
+              <div class="fcf-form-group">
+                  <label for="Email" class="fcf-label">Your email address</label>
+                  <div class="fcf-input-group">
+                      <input type="email" id="Email" name="Email" class="fcf-form-control" required>
+                  </div>
+              </div>
+      
+              <div class="fcf-form-group">
+                  <label for="Message" class="fcf-label">Your message</label>
+                  <div class="fcf-input-group">
+                      <textarea id="Message" name="Message" class="fcf-form-control" rows="6" maxlength="3000" required></textarea>
+                  </div>
+              </div>
+      
+              <div class="fcf-form-group">
+                  <button type="submit" id="fcf-button" class="fcf-btn fcf-btn-primary fcf-btn-lg fcf-btn-block">Send Message</button>
+              </div>
+      
+             
+      
+          </form>
+
+          
+            </div>
+
+          
+
+          </div>
+
+        </div>
+      </section>
+
+
+{% endblock %}
+{% block blog %}
+      <!-- 
+        - #BLOG
+      -->
+      <section class="section blog" id="blog" aria-label="blog" data-section>
+        <div class="container">
+
+          <h2 class="h2-large section-title">Discover our Blogs</h2>
+          <div>
+ 
+          <ul class="flex-list">
+{% for blog in blogs %}
+            <li class="flex-item">
+              <div class="blog-card">
+  
+                <figure class="card-banner img-holder has-before hover:shine" style="--width: 700; --height: 450;">
+                  <img src="../images/{{ blog.image }}" width="700" height="450" loading="lazy" alt="Find a Store"
+                    class="img-cover">
+                </figure>
+
+                <h3 class="h3">
+                  <a href="#" class="card-title">{{ blog.title }}</a>
+                </h3>
+
+                <a href="{{ path('blogid', {'id': blog.id}) }}" class="btn-link">
+                  <span class="span">Read More</span>
+
+                  <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+                </a>
+
+              </div>
+            </li>
+  {% endfor %}
+        </div>
+      
+      </section>
+
+    </article>
+  </main>
+  {% endblock %}
+
+
+
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer" data-section>
+    <div class="container">
+
+      <div class="footer-top">
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Company</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">
+              Find a location nearest you. See <a href="#" class="link">Our Stores</a>
+            </p>
+          </li>
+
+          <li>
+            <p class="footer-list-text bold">00 00 00 00 00</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">souhailaounar@gmail.com</p>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Useful links</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">New Products</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Best Sellers</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Bundle & Save</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Online Gift Card</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Infomation</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Start a Return</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Contact Us</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Shipping FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Terms & Conditions</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="newsletter-title">Good emails.</p>
+
+          <p class="newsletter-text">
+            Enter your email below to be the first to know about new collections and product launches.
+          </p>
+
+          <form action="" class="newsletter-form">
+            <input type="email" name="email_address" placeholder="Enter your email address" required
+              class="email-field">
+
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <div class="wrapper">
+          <p class="copyright">
+            &copy; 2023 codewithlove
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+        <a href="#" class="logo">
+          <img src="../images/logo1.png" width="179" height="26" loading="lazy" alt="Glowing">
+        </a>
+
+        <img src="../images/pay.png" width="313" height="28" alt="available all payment method" class="w-100">
+
+      </div>
+
+    </div>
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="../js/script.js" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
 </html>

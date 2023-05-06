@@ -1,0 +1,121 @@
+<div class="panier-container">
+    <h1><i class="fas fa-shopping-cart"></i> My Cart</h1>
+
+    {% if items | length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+               {% for item in items %}
+    <tr>
+        <td><img class="product-image" src="../images/{{ item.article.image }}" width="200px" height="200px"></td>
+        <td>{{ item.article.title }}</td>
+        <td>{{ item.article.price }}$</td>
+        <td>
+            <form method="POST" action="{{ path('update', {'id': item.article.id}) }}">
+                <input type="number" name="quantity" value="{{ item.quantity }}">
+                <button type="submit">Update</button>
+            </form>
+        </td>
+        <td>{{ item.article.price * item.quantity }}</td>
+        <td>
+            <a href="{{ path('remove', {'id': item.article.id}) }}">
+               <img class="product-image" src="../images/del.png" width="50px" height="50px">
+            </a>
+        </td>
+    </tr>
+{% endfor %}
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Total:</td>
+                    <td>{{ total }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    {% else %}
+        <p>Your cart is empty.!Consult the<a href="/private/article">list of product <a>
+        </p>
+    {% endif %}
+</div>
+<style>
+.panier-container {
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+.panier-container h1 {
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.panier-container h1 i {
+    margin-right: 10px;
+    font-size: 48px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #f1f1f1;
+}
+
+.table tfoot td {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    border-top: 1px solid #ddd;
+}
+
+.product-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #c82333;
+}
+
+</style>
