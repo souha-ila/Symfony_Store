@@ -30,7 +30,7 @@ class RegistrationController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
-        $form->handleRequest($request);
+        $form->handleRequest($request); //permet de "lier" les données de la requête avec les champs du formulaire
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
@@ -61,7 +61,7 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
-
+//-----------------------------------verifier votre adresse email------------------------------------
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {

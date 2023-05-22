@@ -21,7 +21,7 @@ $builder
 ])
 ->add('price', TextType::class)
 ->add('image', TextType::class)
-->add('category', EntityType::class, [
+->add('category', EntityType::class, [   //EntityType : affiche une liste de choix
     'class' => Category::class,
     'choice_label' => 'id'
 ]);}

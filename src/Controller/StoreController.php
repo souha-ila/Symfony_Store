@@ -33,7 +33,7 @@ return $this->render('store/index.html.twig',
 //--------------------------------afficher tt les articles----------------------
    
     #[Route('/private/article', name: 'apstore')]
-    #[IsGranted('ROLE_USER')]
+   
     public function article(Request $request, EntityManagerInterface
     $entityManager,
     ArticleRepository $articleRepository,BlogRepository $blogRepository): Response
@@ -48,23 +48,22 @@ return $this->render('store/index.html.twig',
 
     //------------------------------------Form pour ajouter new article---------------------------------
     #[Route('/AddNewArticle', name: 'NewArticle')]
-public function AddNewArticle(Request $request, EntityManagerInterface
-$entityManager,
+            public function AddNewArticle(Request $request, EntityManagerInterface $entityManager,
 ArticleRepository $articleRepository): Response
-{ 
-$article = new Article();
-$form = $this->createForm(ArticleType::class, $article);
-$form->handleRequest($request);
-if ($form->isSubmitted() && $form->isValid()) {
-    $article = $form->getData();
-$entityManager->persist($article);
-$entityManager->flush();
-$articles = $articleRepository->findBy([], ['id' => 'DESC']);
-$entityManager->flush();
-$this->addFlash('success', 'Larticle a été Ajouté avec succès');
-return $this->render('store/showAll.html.twig',
-['articles' => $articles]);
-}
+         { 
+      $article = new Article();
+      $form = $this->createForm(ArticleType::class, $article);
+      $form->handleRequest($request);
+      if ($form->isSubmitted() && $form->isValid()) {
+          $article = $form->getData();
+           $entityManager->persist($article);
+            $entityManager->flush();
+            $articles = $articleRepository->findBy([], ['id' => 'DESC']);
+            $entityManager->flush();
+          $this->addFlash('success', 'Larticle a été Ajouté avec succès');
+          return $this->render('store/showAll.html.twig',
+        ['articles' => $articles]);
+    }
 return $this->render('store/create.html.twig', [
 'form' => $form->createView(),
 ]);
@@ -78,7 +77,7 @@ return $this->render('store/create.html.twig', [
       return $this->render('store/single.html.twig',
        ['article' => $article]);
   }
-  //---------------------------------------Afficher tous------------------------------------ 
+  //---------------------------------------Afficher  /Admin ------------------------------------ 
 #[Route('/all', name: 'all')]
 public function showall(EntityManagerInterface $entityManager,
 ArticleRepository $articleRepository): Response
@@ -156,25 +155,7 @@ BlogRepository $blogRepository): Response
     return $this->render('store/blog.html.twig',
      ['blog' => $blog]);
 }
-//---------------------------Enregistrer un message--------------------------------------------
-#[Route('/message', name: 'message')]
-public function AddMessage(Request $request, EntityManagerInterface $entityManager): Response
-{ 
-         $message = new Message();
-          $form = $this->createForm(ArticleType::class, $article);
-          $form->handleRequest($request);
-         if ($form->isSubmitted() && $form->isValid()) {
-    $message = $form->getData();
-           $entityManager->persist($message);
-        $entityManager->flush();
 
-
-        return $this->redirectToRoute('app_store');
-}
-return $this->render('store/index.html.twig', [
-'form' => $form->createView(),
-]);
-}
 //------------------------------Categoey 1----------------------------
 #[Route('/article/category1', name: 'category1')]
 public function category1(EntityManagerInterface $entityManager,
@@ -207,14 +188,16 @@ return $this->render('store/articles.html.twig',
 }
 
 
-//----------------------------Panier----------------------
+//---------------------------- afficher Panier----------------------
 
 #[Route('/cart', name: 'cart')]
 public function cart(SessionInterface $session,ArticleRepository $articleRepository): Response
 { 
-    $panier = $session->get('panier', []);
+    $panier = $session->get('panier', []); //Cette ligne récupère le panier de l'utilisateur depuis la session. Si le panier n'existe pas encore, il est initialisé à une liste vide
     $panierWithData =[];
     foreach($panier as $id => $quantity){ 
+
+        //parcourt les éléments du panier de l'utilisateur et récupère les informations de chaque article associé (via l'id) depuis la base de données
     $panierWithData[] = [
         'article'=> $articleRepository->find($id),
         'quantity' => $quantity
@@ -234,25 +217,24 @@ return $this->render('store/cart.html.twig',[
 
 ]); 
 }
-
+//------------------------Ajouter au panier
 #[Route('/Cart/add/{id}', name: 'AddToCart')]
 public function AddTocart($id, SessionInterface $session)
 { 
-
  $panier = $session->get('panier',[]);
  if(!empty($panier[$id])){
     $panier[$id]++;
  }else{
     $panier[$id]=1;
  }
-
   
  $session->set('panier',$panier);
  return $this->redirectToRoute("cart");
-
-
 }
+
+
 //-----------------supprimer
+
 #[Route('/Cart/remove/{id}', name: 'remove')]
 public function Remove($id, SessionInterface $session)
 { 
@@ -264,12 +246,15 @@ $panier =$session->get('panier',[]);
  return $this->redirectToRoute("cart");
 
 }
+//-------quantity bb ---------------------------
 #[Route('/Cart/update/{id}', name: 'update')]
 public function Update($id, Request $request, SessionInterface $session)
 { 
     $panier = $session->get('panier',[]);
     $quantity = $request->request->get('quantity');
 
+    //checks if the product is already in the shopping cart. 
+    //If it is, the quantity of the product is updated to the new quantity. If it isn't, nothing happens.
     if(!empty($panier[$id])){
         $panier[$id] = $quantity;
     }
@@ -277,5 +262,6 @@ public function Update($id, Request $request, SessionInterface $session)
     $session->set('panier', $panier);
     return $this->redirectToRoute("cart");
 }
+
 
 }
