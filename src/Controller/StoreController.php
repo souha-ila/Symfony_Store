@@ -122,30 +122,43 @@ ArticleRepository $articleRepository): Response
     }
 
     //---------------------------Form pour ajouter new blog--------------------------------------------
+   
      #[Route('/AddNewBlog', name: 'NewBlog')]
-     public function AddNewBlog(Request $request, EntityManagerInterface
-     $entityManager,
-     BlogRepository $blogRepository, ArticleRepository $articleRepository): Response
-     { 
+     public function AddNewBlog(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        BlogRepository $blogRepository,
+        ArticleRepository $articleRepository
+    ): Response {
         $blog = new Blog();
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $blog = $form->getData();
-        $entityManager->persist($blog);
-        $entityManager->flush();
-        $blogs = $blogRepository->findAll();
+            $entityManager->persist($blog);
+            $entityManager->flush();
+    
+            $blogs = $blogRepository->findAll(); // Retrieve all blogs
+            $articles = $articleRepository->findAll();
+    
+            return $this->render('store/index.html.twig', [
+                'articles' => $articles,
+                'blogs' => $blogs,
+            ]);
+        }
+    
+        $blogs = $blogRepository->findAll(); // Retrieve all blogs
         $articles = $articleRepository->findAll();
-        
-        return $this->render('store/index.html.twig',
-        [
-            'articles' => $articles,
-            'blogs' => $blogs]);
-        }
+    
         return $this->render('store/newBlog.html.twig', [
-        'form' => $form->createView(),
+            'form' => $form->createView(),
+            'articles' => $articles,
+            'blogs' => $blogs,
         ]);
-        }
+    }
+    
+
 //-----------------------------------Afficher single blog
 #[Route('/blog/{id}', name: 'blogid')]
 public function blogId($id,Request $request, EntityManagerInterface $entityManager,
